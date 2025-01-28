@@ -5,23 +5,28 @@ import { parseStringify } from "../utils";
 
 export const getClerkUsers = async ({ userIds }: { userIds: string[] }) => {
   try {
-    const { data } = await clerkClient.users.getUserList({
+    // Obtén los usuarios desde Clerk
+    const users = await clerkClient.users.getUserList({
       emailAddress: userIds,
     });
 
-    const users = data.map((user) => ({
+    // Transforma la respuesta de Clerk
+    const formattedUsers = users.map((user) => ({
       id: user.id,
-      name: `${user.firstName} ${user.lastName}`,
-      email: user.emailAddresses[0].emailAddress,
-      avatar: user.imageUrl,
+      name: `${user.firstName || ""} ${user.lastName || ""}`.trim(),
+      email: user.emailAddresses[0]?.emailAddress || "Unknown email",
+      avatar: user.imageUrl || "",
     }));
 
-    const sortedUsers = userIds.map((email) =>
-      users.find((user) => user.email === email)
+    // Ordena los usuarios en el mismo orden que los userIds proporcionados
+    const sortedUsers = userIds.map(
+      (email) => formattedUsers.find((user) => user.email === email) || null
     );
 
-    return parseStringify(sortedUsers);
+    // Elimina usuarios no encontrados y devuelve los resultados
+    return parseStringify(sortedUsers.filter(Boolean));
   } catch (error) {
-    console.log(`Error fetching users: ${error}`);
+    console.error(`Error fetching users: ${error.message}`);
+    return []; // Devuelve un array vacío en caso de error
   }
 };
