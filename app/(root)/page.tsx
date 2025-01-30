@@ -53,7 +53,9 @@ const Home = async () => {
                   </div>
                   <div className="space-y-1">
                     <p className="line-clamp-1 text-lg">{metadata.title}</p>
-                    <p className="text-sm font-ligh text-blue-100">Created about {dateConverter(createdAt)}</p>
+                    <p className="text-sm font-ligh text-blue-100">
+                      Created about {dateConverter(createdAt)}
+                    </p>
                   </div>
                 </Link>
                 {/* TODO: Delete Button here */}

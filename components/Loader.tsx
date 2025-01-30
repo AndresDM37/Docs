@@ -10,7 +10,7 @@ const Loader = () => {
         height={32}
         className="animated-spin"
       />
-      Loading...
+      Cargando...
     </div>
   );
 };
