@@ -33,15 +33,17 @@ export const dateConverter = (timestamp: string): string => {
 
   switch (true) {
     case diffInDays > 7:
-      return `${Math.floor(diffInDays / 7)} weeks ago`;
-    case diffInDays >= 1 && diffInDays <= 7:
-      return `${Math.floor(diffInDays)} days ago`;
+      return `${Math.floor(diffInDays / 7)} semana`;
+    case diffInDays === 1:
+      return "1 día";
+    case diffInDays > 1 && diffInDays <= 7:
+      return `${Math.floor(diffInDays)} días`;
     case diffInHours >= 1:
-      return `${Math.floor(diffInHours)} hours ago`;
+      return `${Math.floor(diffInHours)} horas`;
     case diffInMinutes >= 1:
-      return `${Math.floor(diffInMinutes)} minutes ago`;
+      return `${Math.floor(diffInMinutes)} minutos`;
     default:
-      return "Just now";
+      return "Ahora";
   }
 };
 

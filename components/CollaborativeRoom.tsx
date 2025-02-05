@@ -18,26 +18,27 @@ import ShareModal from "./ShareModal";
 const CollaborativeRoom = ({
   roomId,
   roomMetadata,
-  users, 
-  currentUserType
+  users,
+  currentUserType,
 }: CollaborativeRoomProps) => {
-  
   const [documentTitle, setDocumentTitle] = useState(roomMetadata.title);
   const [editing, setEditing] = useState(false);
   const [loading, setLoading] = useState(false);
 
   const containerRef = useRef<HTMLDivElement>(null);
-  const inputRef = useRef<HTMLDivElement>(null);
+  const inputRef = useRef<HTMLInputElement>(null);
 
-  const updateTitleHandler = async (e: React.KeyboardEvent<HTMLInputElement>) => {
+  const updateTitleHandler = async (
+    e: React.KeyboardEvent<HTMLInputElement>
+  ) => {
     if (e.key === "Enter") {
       setLoading(true);
-      
-      try {
-        if(documentTitle !== roomMetadata.title) {
-          const updatedDocument = await updateDocument(roomId, documentTitle)
 
-          if(updatedDocument) {
+      try {
+        if (documentTitle !== roomMetadata.title) {
+          const updatedDocument = await updateDocument(roomId, documentTitle);
+
+          if (updatedDocument) {
             setEditing(false);
           }
         }
@@ -51,24 +52,27 @@ const CollaborativeRoom = ({
 
   useEffect(() => {
     const handleClickOutside = (e: MouseEvent) => {
-      if(containerRef.current && !containerRef.current.contains(e.target as Node)) {
+      if (
+        containerRef.current &&
+        !containerRef.current.contains(e.target as Node)
+      ) {
         setEditing(false);
-        updateDocument(roomId, documentTitle)
+        updateDocument(roomId, documentTitle);
       }
-    }
+    };
 
-    document.addEventListener('mousedown', handleClickOutside);
+    document.addEventListener("mousedown", handleClickOutside);
 
     return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
-    }
-  }, [roomId, documentTitle])
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [roomId, documentTitle]);
 
   useEffect(() => {
-    if(editing && inputRef.current) {
+    if (editing && inputRef.current) {
       inputRef.current.focus();
     }
-  }, [editing])
+  }, [editing]);
 
   return (
     <RoomProvider id={roomId}>
@@ -107,7 +111,7 @@ const CollaborativeRoom = ({
                 />
               )}
 
-              {currentUserType !== 'editor' && !editing && (
+              {currentUserType !== "editor" && !editing && (
                 <p className="view-only-tag">Solamente ver</p>
               )}
 
@@ -116,10 +120,10 @@ const CollaborativeRoom = ({
             <div className="flex w-full flex-1 justify-end gap-2 sm:gap-3">
               <ActiveCollaborators />
 
-              <ShareModal 
+              <ShareModal
                 roomId={roomId}
                 collaborators={users}
-                creatorId={roomMetadata.creatorId}
+                creatorId={roomMetadata.creatorID}
                 currentUserType={currentUserType}
               />
 
@@ -131,7 +135,7 @@ const CollaborativeRoom = ({
               </SignedIn>
             </div>
           </Header>
-          <Editor roomId={roomId} currentUserType={currentUserType}/>
+          <Editor roomId={roomId} currentUserType={currentUserType} />
         </div>
       </ClientSideSuspense>
     </RoomProvider>

@@ -27,7 +27,7 @@ export const getClerkUsers = async ({ userIds }: { userIds: string[] }) => {
     );
 
     // Elimina usuarios no encontrados y devuelve los resultados
-    return parseStringify(sortedUsers.filter(Boolean));
+    return parseStringify(sortedUsers);
   } catch (error) {
     if (error instanceof Error) {
       console.error(`Error fetching users: ${error.message}`);
