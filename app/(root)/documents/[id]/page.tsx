@@ -27,9 +27,6 @@ const Document = async ({ params: { id } }: SearchParamProps) => {
 
   const currentUserType = room.usersAccesses[clerkUser.emailAddresses[0].emailAddress]?.includes('room:write') ? 'editor' : 'viewer';
 
-  console.log("desde page.tsx:") 
-  console.log(room.metadata)
-
   return (
     <main className="flex w-full flex-col items-center">
       <CollaborativeRoom 
