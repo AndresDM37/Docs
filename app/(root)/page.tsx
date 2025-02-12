@@ -39,30 +39,40 @@ const Home = async () => {
             />
           </div>
           <ul className="document-ul">
-            {roomDocuments.data.map(({ id, metadata, createdAt }: { id: string; metadata: { title: string }; createdAt: string }) => (
-              <li key={id} className="document-list-item">
-                <Link
-                  href={`/documents/${id}`}
-                  className="flex flex-1 items-center gap-4"
-                >
-                  <div className="hidden rounded-md bg-dark-500 p-2 sm:block">
-                    <Image
-                      src="/assets/icons/doc.svg"
-                      alt="file"
-                      width={40}
-                      height={40}
-                    />
-                  </div>
-                  <div className="space-y-1">
-                    <p className="line-clamp-1 text-lg">{metadata.title}</p>
-                    <p className="text-sm font-ligh text-blue-100">
-                      Creado hace {dateConverter(createdAt)}
-                    </p>
-                  </div>
-                </Link>
-                <DeleteModal roomId={id}/>
-              </li>
-            ))}
+            {roomDocuments.data.map(
+              ({
+                id,
+                metadata,
+                createdAt,
+              }: {
+                id: string;
+                metadata: { title: string };
+                createdAt: string;
+              }) => (
+                <li key={id} className="document-list-item">
+                  <Link
+                    href={`/documents/${id}`}
+                    className="flex flex-1 items-center gap-4"
+                  >
+                    <div className="hidden rounded-md bg-dark-500 p-2 sm:block">
+                      <Image
+                        src="/assets/icons/doc.svg"
+                        alt="file"
+                        width={40}
+                        height={40}
+                      />
+                    </div>
+                    <div className="space-y-1">
+                      <p className="line-clamp-1 text-lg">{metadata.title}</p>
+                      <p className="text-sm font-ligh text-blue-100">
+                        Creado hace {dateConverter(createdAt)}
+                      </p>
+                    </div>
+                  </Link>
+                  <DeleteModal roomId={id} />
+                </li>
+              )
+            )}
           </ul>
         </div>
       ) : (
@@ -81,6 +91,20 @@ const Home = async () => {
           />
         </div>
       )}
+      <a
+        href="https://github.com/AndresDM37/Docs"
+        target="_blank"
+        rel="noreferrer"
+        className="flex items-center gap-2 text-blue-100 "
+      >
+        <Image
+          src="/assets/icons/github.svg"
+          alt="Github"
+          width={70}
+          height={70}
+        />
+        GitHub
+      </a>
     </main>
   );
 };
